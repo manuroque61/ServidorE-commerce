@@ -1,0 +1,18 @@
+<h1>Lista de Productos</h1>
+<ul>
+    {{#each payload}}
+    <li>
+        <a href="/products/{{this._id}}">{{this.title}}</a> - ${{this.price}}
+        <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+    </li>
+    {{/each}}
+</ul>
+{{#if hasPrevPage}} <a href="{{prevLink}}">Anterior</a> {{/if}}
+{{#if hasNextPage}} <a href="{{nextLink}}">Siguiente</a> {{/if}}
+<script>
+    function addToCart(productId) {
+        fetch('/api/carts/:cid/products/' + productId, { method: 'POST' })
+            .then(() => alert('Producto agregado'))
+            .catch(err => console.error(err));
+    }
+</script>
